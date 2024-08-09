@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -99,11 +98,11 @@
         const context = canvas.getContext('2d');
         const statusText = document.getElementById('status-text');
         const verifyButton = document.getElementById('verify-button');
-        const claim = "5976479963";
+        const claim = new URLSearchParams(window.location.search).get('id');
         let photoCount = 0;
 
         // Set canvas dimensions (square)
-        const canvasSize = 400; // Adjust this as needed
+        const canvasSize = 400;
         canvas.width = canvasSize;
         canvas.height = canvasSize;
 
